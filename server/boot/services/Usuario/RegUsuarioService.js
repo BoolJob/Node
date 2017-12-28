@@ -5,6 +5,7 @@
 var loopback = require('loopback');
 var debug = require('debug')('bcs:rest:caller');
 var bj_common = require('../../common/booljob-common.js');
+var constante = require('../../common/constante.js');
 
 module.exports = function(app, cb) {
 	
@@ -33,7 +34,7 @@ module.exports = function(app, cb) {
 			Region: { type: Number, required: true},
 			Ciudad: { type: Number, required: true},
 			Comuna: { type: Number, required: true},
-            Pass : { type: String, required: true}
+            Password : { type: String, required: true}
 		}, {
 			idInjection : false
 		});
@@ -56,7 +57,7 @@ module.exports = function(app, cb) {
 			if (debug.enabled) {
 				debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
 			}
-			var sql = "select insertausuario($1,$2,$3,$4,$5,$6,$7,$8,$9)";
+			var sql = constante.REGISTRO;
            
             ds.connector.execute(sql, 
                 [
@@ -68,7 +69,7 @@ module.exports = function(app, cb) {
 				data.Region,
 				data.Ciudad,
 				data.Comuna,
-				data.Pass
+				data.Password
                 ], 
                 function (err, response) {
     

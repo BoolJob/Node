@@ -5,6 +5,7 @@
 var loopback = require('loopback');
 var debug = require('debug')('bcs:rest:caller');
 var bj_common = require('../../common/booljob-common.js');
+var constante = require('../../common/constante.js');
 
 module.exports = function(app, cb) {
 	
@@ -33,7 +34,7 @@ module.exports = function(app, cb) {
 
 		// Output types
 		var loginUsuarioResponse = ds.define('loginUsuarioResponse', {
-		
+			respuesta: Number
 		}, {
 			idInjection : false
 		});
@@ -44,7 +45,25 @@ module.exports = function(app, cb) {
 
 		// regUsuarioExecute remote wrapper
 		LoginUsuarioService._Login_usuarioExecute = function(data, cb) {
-			
+			var ds = app.dataSources.postgres;
+            
+			if (debug.enabled) {
+				debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
+			}
+			var sql = constante.LOGIN;
+           
+            ds.connector.execute(sql, 
+                [
+                data.User, 
+                data.Password
+                ], 
+                function (err, response) {
+    
+                    if (err) console.error(err);
+                    cb(err, response[0]);
+    
+                }
+            );
 		};
 
 		//Disable unused remote methods

@@ -120,7 +120,7 @@ module.exports = function(app, cb) {
             },
 			returns : {
 				arg : 'return',
-				type :  app.models.LoginUsuarioService.dataSource.getModel('loginUsuarioResponse'),
+				type :  'loginUsuarioResponse',
 				root : true
 			},
 			http : {
