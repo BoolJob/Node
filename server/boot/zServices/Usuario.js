@@ -14,27 +14,7 @@ module.exports = function(app, cb) {
 		// Create the model
 		var Usuarios = ds.createModel('Usuario', {}, {
 			plural : 'Usuarios',
-			acls : [ 
-				{
-				accessType: "*",
-				principalType: "ROLE",
-				principalId: "$everyone",
-				permission: "ALLOW"
-                }/* ,
-				{
-				  accessType: "*",
-				  principalType: "ROLE",
-				  principalId: "$everyone",
-				  permission: "DENY"
-				},
-				{
-				  accessType: "*",
-				  principalType: "ROLE",
-				  principalId: "ADMIN",
-				  permission: "ALLOW",
-				  property: "regUsuario"
-				}*/
-			]
+			acls : []
 		});
 
 		// Input types
@@ -57,8 +37,11 @@ module.exports = function(app, cb) {
                     Apellido : data.Apellido,
                     Rut: data.Rut,
 					Email : data.Email,
-					Sexo : data.Sexo,					
-					Pass : data.Pass
+					Pais: data.Pais,
+					Region: data.Region,
+					Ciudad: data.Ciudad,
+					Comuna: data.Comuna,					
+					Password : data.Password
 				}, function(err, response) {
 					if(!err){
 						return cb(err, response);

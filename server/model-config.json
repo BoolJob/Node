@@ -12,5 +12,9 @@
       "../common/mixins",
       "./mixins"
     ]
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
   }
 }

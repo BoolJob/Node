@@ -1,9 +1,13 @@
 {
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
   "postgres": {
     "host": "localhost",
     "port": 5432,
-    "url": "postgres://postgres:matador89@localhost:5432/Booljob?ssl=false",
-    "database": "Booljob",
+    "url": "postgres://postgres:matador89@localhost:5432/booljob?ssl=false",
+    "database": "booljob",
     "password": "matador89",
     "name": "postgres",
     "user": "postgres",
