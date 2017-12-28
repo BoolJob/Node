@@ -19,3 +19,4 @@ node_modules
 npm-debug.log
 push.sh
 pull.sh
+server/datasources.json
