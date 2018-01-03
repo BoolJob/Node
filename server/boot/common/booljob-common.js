@@ -107,6 +107,10 @@ module.exports = {
 	 */
 	createAgreementId : function(data) {
 		return data.MSAType + '_' + data.BrokerageRUT + '_' + data.ClientRUT;
+	},
+
+	createToken : function(bits){
+		return crypto.randomBytes(bits).toString('hex');
 	}
 
 };

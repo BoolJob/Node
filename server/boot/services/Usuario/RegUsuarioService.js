@@ -52,33 +52,40 @@ module.exports = function(app, cb) {
 
 		// regUsuarioExecute remote wrapper
 		RegUsuarioService._Reg_usuarioExecute = function(data, cb) {
-            var ds = app.dataSources.postgres;
+			try{
+				var ds = app.dataSources.postgres;
+				
+				if (debug.enabled) {
+					debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
+				}
+
+				var token = bj_common.createToken(32);
+
+				var sql = constante.REGISTRO;
+			   
+				ds.connector.execute(sql, 
+					[
+					data.Nombre, 
+					data.Apellido, 
+					data.Email, 
+					data.Rut,
+					data.Pais,
+					data.Region,
+					data.Ciudad,
+					data.Comuna,
+					data.Password,
+					token
+					], 
+					function (err, response) {
+		
+						if (err) console.error(err);
+						
+						cb(err, response);
+		
+					}
+				);
+			}catch(Exception){}
             
-			if (debug.enabled) {
-				debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
-			}
-			var sql = constante.REGISTRO;
-           
-            ds.connector.execute(sql, 
-                [
-                data.Nombre, 
-                data.Apellido, 
-                data.Email, 
-				data.Rut,
-				data.Pais,
-				data.Region,
-				data.Ciudad,
-				data.Comuna,
-				data.Password
-                ], 
-                function (err, response) {
-    
-                    if (err) console.error(err);
-                    
-                    cb(err, response);
-    
-                }
-            );
 		};
 		
 
