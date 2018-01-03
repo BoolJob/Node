@@ -45,25 +45,30 @@ module.exports = function(app, cb) {
 
 		// regUsuarioExecute remote wrapper
 		LoginUsuarioService._Login_usuarioExecute = function(data, cb) {
-			var ds = app.dataSources.postgres;
-            
-			if (debug.enabled) {
-				debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
-			}
-			var sql = constante.LOGIN;
-           
-            ds.connector.execute(sql, 
-                [
-                data.User, 
-                data.Password
-                ], 
-                function (err, response) {
-    
-                    if (err) console.error(err);
-                    cb(err, response[0]);
-    
-                }
-            );
+			try{
+				var ds = app.dataSources.postgres;
+				
+				if (debug.enabled) {
+					debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
+				}
+				var sql = constante.LOGIN;
+			   
+				ds.connector.execute(sql, 
+					[
+					data.User, 
+					data.Password
+					], 
+					function (err, response) {
+		
+						if (err){
+							console.error(err);
+							cb(err, response);
+						} 
+						cb(err, response[0]);
+		
+					}
+				);
+			}catch(Exception){}
 		};
 
 		//Disable unused remote methods
