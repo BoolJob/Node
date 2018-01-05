@@ -35,7 +35,7 @@ module.exports = function(app, cb) {
 				app.models.RegUsuarioService._Reg_usuarioExecute({
                     Nombre: data.Nombre,
                     Apellido : data.Apellido,
-                    Rut: data.Rut,
+                    Telefono: data.Telefono,
 					Email : data.Email,
 					Pais: data.Pais,
 					Region: data.Region,
