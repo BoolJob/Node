@@ -6,6 +6,7 @@ var loopback = require('loopback');
 var debug = require('debug')('bj:rest:caller');
 var utils = require('../../common/utils.js');
 var constante = require('../../common/constante.js');
+var config = require('config');
 
 module.exports = function(app, cb) {
 	
@@ -15,12 +16,6 @@ module.exports = function(app, cb) {
 		// Create the model
 		var RegUsuarioService = ds.createModel('RegUsuarioService', {}, {
 			plural : 'RegUsuarioService',
-			/*acls : [ {
-				permission : 'DENY',
-				principalId : '$unauthenticated',
-				principalType : 'ROLE',
-				property : '*'
-            } ]*/
             acls : []
 		});
 
@@ -46,6 +41,7 @@ module.exports = function(app, cb) {
 			idInjection : false
 		});
 		
+		debug("ENV: " + config.get('Email.Registro.Subject'));
 
 		// Remote methods
 		RegUsuarioService.extend("RegUsuarioService", regUsuarioExecute);
@@ -59,7 +55,7 @@ module.exports = function(app, cb) {
 					debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
 				}
 
-				var token = utils.createToken(32);
+				const token = utils.createToken(32);
 
 				var sql = constante.REGISTRO;
 			   
@@ -78,10 +74,26 @@ module.exports = function(app, cb) {
 					], 
 					function (err, response) {
 		
-						if (err) console.error(err);
-						
-						cb(err, response);
-		
+						if (err) {
+							console.error(err);
+							cb(err, response);
+							return;
+						}
+
+						const mailOptions = {
+							from: config.get('Email.Registro.From'),
+							to: data.Email,
+							subject: config.get('Email.Registro.Subject'),
+							html: 'Su token es: ' + token
+						}
+
+						utils.transport.sendMail(mailOptions, function(err, info){
+							if(err){
+								cb(err, response);
+							}else{
+								cb(null, response);
+							}
+						});
 					}
 				);
 			}catch(ex){

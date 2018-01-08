@@ -3,8 +3,19 @@
  */
 
 var debug = require('debug')('bj:rest:caller');
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
+var config = require('config');
 
 module.exports = {
+
+	transport : nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: config.get('Email.Usuario'),
+			pass: config.get('Email.Pass')
+		}
+	}),
 
 	/**
 	 * Deshabilita todos los métodos remotos, excepto un listado configurable
@@ -121,6 +132,16 @@ module.exports = {
 		error.name = "Internal Error";
 
 		return error;
+	},
+
+	getTransEmail : function(){
+		return nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: 'javier.parra89@gmail.com',
+				pass: 'nomeacuerdo.89'
+			}
+		});
 	}
 
 };

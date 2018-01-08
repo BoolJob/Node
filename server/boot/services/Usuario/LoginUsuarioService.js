@@ -15,19 +15,14 @@ module.exports = function(app, cb) {
 		// Create the model
 		var LoginUsuarioService = ds.createModel('LoginUsuarioService', {}, {
 			plural : 'LoginUsuarioService',
-			/*acls : [ {
-				permission : 'DENY',
-				principalId : '$unauthenticated',
-				principalType : 'ROLE',
-				property : '*'
-            } ]*/
             acls : []
 		});
 
 		// Input types
 		var loginUsuarioExecute = ds.define('loginUsuarioExecute', {
 			User: { type: String, required: true},
-			Password : { type: String, required: true}
+			Password : { type: String, required: true},
+			Token: String
 		}, {
 			idInjection : false
 		});
@@ -56,16 +51,18 @@ module.exports = function(app, cb) {
 				ds.connector.execute(sql, 
 					[
 					data.User, 
-					data.Password
+					data.Password,
+					data.Token
 					], 
 					function (err, response) {
 		
 						if (err){
 							console.error(err);
 							cb(err, response);
+							return;
 						} 
+						
 						cb(err, response[0]);
-		
 					}
 				);
 			}catch(ex){

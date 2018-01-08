@@ -66,7 +66,8 @@ module.exports = function(app, cb) {
 				
 				app.models.LoginUsuarioService._Login_usuarioExecute({
 					User: data.User,
-					Password : data.Password
+					Password: data.Password,
+					Token: data.Token
 				}, function(err, response) {
 					if(!err){
 						return cb(err, response);
