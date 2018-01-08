@@ -3,6 +3,7 @@
  */
 
 var debug = require('debug')('bcs:rest:caller');
+var crypto = require('crypto');
 
 module.exports = {
 
