@@ -3,8 +3,8 @@
  */
 
 var loopback = require('loopback');
-var debug = require('debug')('bcs:rest:caller');
-var bj_common = require('../common/booljob-common.js');
+var debug = require('debug')('bj:rest:caller');
+var utils = require('../common/utils.js');
 
 module.exports = function(app, cb) {
 
@@ -130,7 +130,7 @@ module.exports = function(app, cb) {
 		});
 		
 		// Disable unused remote methods
-		bj_common.disableRemoteMethods(Usuarios, ['regUsuario','loginUsuario']);
+		utils.disableRemoteMethods(Usuarios, ['regUsuario','loginUsuario']);
 
 		// Expose to REST
 		app.model(Usuarios);

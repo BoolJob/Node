@@ -3,8 +3,8 @@
  */
 
 var loopback = require('loopback');
-var debug = require('debug')('bcs:rest:caller');
-var bj_common = require('../../common/booljob-common.js');
+var debug = require('debug')('bj:rest:caller');
+var utils = require('../../common/utils.js');
 var constante = require('../../common/constante.js');
 
 module.exports = function(app, cb) {
@@ -59,7 +59,7 @@ module.exports = function(app, cb) {
 					debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
 				}
 
-				var token = bj_common.createToken(32);
+				var token = utils.createToken(32);
 
 				var sql = constante.REGISTRO;
 			   
@@ -84,13 +84,15 @@ module.exports = function(app, cb) {
 		
 					}
 				);
-			}catch(Exception){}
+			}catch(ex){
+				cb(utils.getError(ex));
+			}
             
 		};
 		
 
 		//Disable unused remote methods
-		bj_common.disableRemoteMethods(RegUsuarioService, []);
+		utils.disableRemoteMethods(RegUsuarioService, []);
 
 		// Expose to REST
 		app.model(RegUsuarioService);
