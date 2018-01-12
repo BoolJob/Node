@@ -4,7 +4,9 @@
         "Pass": "nomeacuerdo.89",
         "Registro": {
             "From": "soporte@booljob.com",
-            "Subject": "Bienvenido a BoolJob Desarrollo"
+            "Subject": "Bienvenido a BoolJob Desarrollo",
+            "Body": "server/html/bienvenido.html",
+            "UrlLogin": "http://localhost/login#"
         }
     }
 }

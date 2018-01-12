@@ -7,6 +7,8 @@ var debug = require('debug')('bj:rest:caller');
 var utils = require('../../common/utils.js');
 var constante = require('../../common/constante.js');
 var config = require('config');
+var format = require('string-format');
+var fs = require('fs');
 
 module.exports = function(app, cb) {
 	
@@ -40,8 +42,6 @@ module.exports = function(app, cb) {
 		}, {
 			idInjection : false
 		});
-		
-		debug("ENV: " + config.get('Email.Registro.Subject'));
 
 		// Remote methods
 		RegUsuarioService.extend("RegUsuarioService", regUsuarioExecute);
@@ -80,24 +80,32 @@ module.exports = function(app, cb) {
 							return;
 						}
 
-						const mailOptions = {
-							from: config.get('Email.Registro.From'),
-							to: data.Email,
-							subject: config.get('Email.Registro.Subject'),
-							html: 'Su token es: ' + token
-						}
-
-						utils.transport.sendMail(mailOptions, function(err, info){
-							if(err){
+						fs.readFile(config.get('Email.Registro.Body'), 'utf8', function read(err, template) {
+							if (err) {
+								console.error(err);
 								cb(err, response);
-							}else{
-								cb(null, response);
+								return;
 							}
+
+							const mailOptions = {
+								from: config.get('Email.Registro.From'),
+								to: data.Email,
+								subject: config.get('Email.Registro.Subject'),
+								html: format(template, data.Nombre, config.get('Email.Registro.UrlLogin'), token)
+							}
+	
+							utils.transport.sendMail(mailOptions, function(err, info){
+								if(err){
+									cb(err, response);
+								}else{
+									cb(null, response);
+								}
+							});
 						});
 					}
 				);
 			}catch(ex){
-				cb(utils.getError(ex));
+				cb(ex);
 			}
             
 		};
