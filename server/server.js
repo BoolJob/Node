@@ -30,7 +30,7 @@ app.use(expressSanitizer());
 // Custom boot dirs
 var bootOptions = {
 	appRootDir: __dirname,
-	bootDirs : ['boot/common', 'boot/services/Usuario', 'boot/zServices']
+	bootDirs : ['boot/common', 'boot/services/Usuario', 'boot/services/Localizacion', 'boot/zServices']
 };
 
 // Bootstrap the application, configure models, datasources and middleware.
