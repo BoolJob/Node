@@ -38,9 +38,7 @@ module.exports = function(app, cb) {
                     Telefono: data.Telefono,
 					Email : data.Email,
 					Pais: data.Pais,
-					Region: data.Region,
 					Ciudad: data.Ciudad,
-					Comuna: data.Comuna,					
 					Password : data.Password
 				}, function(err, response) {
 					if(!err){

@@ -28,9 +28,7 @@ module.exports = function(app, cb) {
 			Email : { type: String, required: true},
 			Telefono: { type: String, required: true},
 			Pais: { type: Number, required: true},
-			Region: { type: Number, required: true},
 			Ciudad: { type: Number, required: true},
-			Comuna: { type: Number, required: true},
             Password : { type: String, required: true}
 		}, {
 			idInjection : false
@@ -66,9 +64,7 @@ module.exports = function(app, cb) {
 					data.Email, 
 					data.Telefono,
 					data.Pais,
-					data.Region,
 					data.Ciudad,
-					data.Comuna,
 					data.Password,
 					token
 					], 
