@@ -5,7 +5,6 @@
 var loopback = require('loopback');
 var debug = require('debug')('bj:rest:caller');
 var utils = require('../../common/utils.js');
-var constante = require('../../common/constante.js');
 
 module.exports = function(app, cb) {
 	
@@ -50,9 +49,8 @@ module.exports = function(app, cb) {
 				if (debug.enabled) {
 					debug('GetPaisService._Get_paisExecute pre: %j', data);
 				}
-				var sql = constante.PAIS;
 			   
-				ds.connector.execute(sql, 
+				ds.connector.execute("select id_pais, nombre from public$get_pais()", 
 					[], 
 					function (err, response) {
 		

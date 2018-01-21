@@ -5,7 +5,6 @@
 var loopback = require('loopback');
 var debug = require('debug')('bj:rest:caller');
 var utils = require('../../common/utils.js');
-var constante = require('../../common/constante.js');
 
 module.exports = function(app, cb) {
 	
@@ -46,9 +45,8 @@ module.exports = function(app, cb) {
 				if (debug.enabled) {
 					debug('RegUsuarioService._Reg_usuarioExecute pre: %j', data);
 				}
-				var sql = constante.LOGIN;
 			   
-				ds.connector.execute(sql, 
+				ds.connector.execute("select public$get_login($1,$2) AS Respuesta", 
 					[
 					data.User, 
 					data.Password,

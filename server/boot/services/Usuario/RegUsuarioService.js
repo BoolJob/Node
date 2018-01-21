@@ -5,7 +5,6 @@
 var loopback = require('loopback');
 var debug = require('debug')('bj:rest:caller');
 var utils = require('../../common/utils.js');
-var constante = require('../../common/constante.js');
 var config = require('config');
 var format = require('string-format');
 var fs = require('fs');
@@ -54,10 +53,8 @@ module.exports = function(app, cb) {
 				}
 
 				const token = utils.createToken(32);
-
-				var sql = constante.REGISTRO;
 			   
-				ds.connector.execute(sql, 
+				ds.connector.execute("select public$set_usuario($1,$2,$3,$4,$5,$6,$7,$8)", 
 					[
 					data.Nombre, 
 					data.Apellido, 
